@@ -1,0 +1,46 @@
+spring:
+  config:
+    on-not-found: ignore
+    import:
+      - classpath:service-properties/micro-common/application.yml
+      - classpath:service-properties/micro-common/application-${spring.profiles.active:local}.yml
+      - classpath:service-properties/micro-asset/application.yml
+      - classpath:service-properties/micro-asset/application-${spring.profiles.active:local}.yml
+      - classpath:application-${spring.profiles.active:local}-core.yml
+      - classpath:application-override.yml
+      - classpath:application-${spring.profiles.active:local}-override.yml
+  jpa:
+    properties:
+      hibernate:
+        search:
+          mapping:
+            process_annotations: false    #hot fix - JDK 17 에서 HibernateSearch 가 제대로 동작하지 않는다. FAT JAR 의 nexted 탐색이 불가능하다. 이 문제는 HibernateSearch 7 에서 해결될 예정이다.
+  mail:
+    host:
+    port:
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            trust: smtp.gmail.com
+  main:
+    allow-bean-definition-overriding: true
+platform:
+  config:
+    batch:
+      notification:
+        enabled: true
+        logging: false
+    datasource:
+      provider:
+        atomikos: false
+
+logging:
+  level:
+    org.apache.activemq: WARN

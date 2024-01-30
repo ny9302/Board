@@ -1,0 +1,6 @@
+platform:
+  config:
+    endpoint:
+      conditional-exclude: false
+    provider:
+      search: QUERY #HIBERNATE

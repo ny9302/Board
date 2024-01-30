@@ -1,0 +1,121 @@
+spring:
+  cache:
+    type: jcache
+  datasource:
+    rcm-rdb:
+      common:
+        driver-class-name: com.mysql.cj.jdbc.Driver #org.mariadb.jdbc.Driver
+        jdbc-url:
+        password:
+        url:
+        username:
+        hibernate:
+          cache:
+            use_query_cache: true
+            use_second_level_cache: true
+          redisson:
+            entity-asset:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            query-asset:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            entity-translate:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            query-translate:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+          dialect: org.hibernate.dialect.MySQLDialect #org.hibernate.dialect.MariaDBDialect
+          hbm2ddl:
+            auto: update
+          show_sql: true
+  database-platform: org.hibernate.dialect.MySQLDialect #org.hibernate.dialect.MariaDBDialect
+  jpa:
+    generate-ddl: true
+    hibernate:
+      cache:
+        use_second_level_cache: true
+      dialect: org.hibernate.dialect.MySQLDialect #org.hibernate.dialect.MariaDBDialect
+      format_sql: true
+    properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _HISTORY
+            modified_flag_suffix: _CHANGED
+      hibernate:
+        cache:
+          enabled: true
+          region:
+            factory_class: org.redisson.hibernate.RedissonRegionFactory # for redisson
+          redisson:   # for redisson
+            config: redisson-dev.yml   # for redisson
+            entity:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            collection:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            naturalid:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            query:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            timestamps:
+              eviction:
+                max_entries: 10000
+              expiration:
+                time_to_live: 600000
+            fallback: true
+      jakarta:
+        persistence:
+          validation:
+            mode: none
+  main:
+    allow-bean-definition-overriding: true
+    mvc:
+      static-path-pattern: /resources/**
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force-response: true
+      force-request: true
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG    # 실제 운영 서버에서는 변경
+        orm:
+          jpa:
+            persistenceunit: ERROR    #  WARN o.s.o.j.p.ClassFileTransformerAdapter : Error weaving class [org/springframework/data/util/KotlinReflectionUtils] with transformer of class [org.hibernate.jpa.internal.enhance.EnhancingClassTransformerImpl]
+
+platform:
+  config:
+    security:
+      token:
+        secret: QU0tbzBqYGIraiM=Qy5WW303ajZyJmlPZ2lzSUM2NDppS31pSFwqXGBEcCpkU3o=aU04dkIxW1slKV5cb0hmUms=UlV7QHpY
+        validity: 3600

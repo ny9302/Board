@@ -1,0 +1,62 @@
+spring:
+  cache:
+    type: jcache
+  datasource:
+    rcm-rdb:
+      common:
+        driver-class-name: com.mysql.cj.jdbc.Driver #org.mariadb.jdbc.Driver
+        jdbc-url:
+        password:
+        url:
+        username:
+
+  jpa:
+    properties:
+      hibernate:
+        cache:
+          redisson:   # for redisson
+            config: redisson-production.yml   # for redisson
+
+
+platform:
+  config:
+    asset:
+      view:
+        domain: https://admin.bv.run
+    common:
+      site-name: Enfinity API
+      built-in-user:
+        enabled: false
+      built-in-translation:
+        enabled: false
+      built-in-lock:
+        enabled: false
+      thymeleaf:
+        enabled: false
+      elasticache:
+        enabled: false
+    provider:
+      mongo: false
+      elastic: NONE
+    datasource:
+      data-per-services: false
+    security:
+      aes-key: 76f0ef614f751def723694732266613ccd9fee4783a52e4b150a59c47e15514f
+    admin:
+      validate:
+        regex:
+          loginName: ^[_a-zA-Z0-9-]+(.[_a-zA-Z0-9-]+)*@(?:\w+\.)+\w+$
+        message:
+          loginName: error.message.regex.loginName.email
+
+server:
+  port: 443
+  ssl:
+    enabled: true
+    enabled-protocols:
+      - TLSv1.1
+      - TLSv1.2
+    key-store: classpath:ssl/STAR.bv.run.p12
+    key-store-type: PKCS12
+    key-store-password:
+

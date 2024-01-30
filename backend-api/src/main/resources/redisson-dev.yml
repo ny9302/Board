@@ -1,0 +1,4 @@
+singleServerConfig:
+  password: "Rcm-pwd0!"
+  address: "redis://redis.dev.rchemist.io:16379"
+  database: 2

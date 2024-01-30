@@ -1,0 +1,85 @@
+server:
+  port: 8310
+https:
+  port: 8311
+
+spring:
+  data:
+    redis:
+      host: ${REDIS_URL}
+      port: ${REDIS_PORT}
+      database: ${REDIS_DB_NUMBER}}
+      password: ${REDIS_PASSWORD}
+  elasticsearch:
+    rest:
+      port: ${ES_PORT}
+      host: ${ES_URL}
+      username: ${ES_USERNAME}
+      password: ${ES_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        search:
+          enabled: true
+          default:
+            elasticsearch:
+              port: ${ES_PORT}
+              host: ${ES_URL}
+              required_index_status: yellow
+          configuration_property_checking:
+            strategy: ignore    # 설정 정보가 unused 상태인 경우에도 별도의 warning 을 하지 않도록 변경
+          schema_management:
+            #strategy: drop-and-create #create-or-update # drop-and-create   # 개발 중일 때만 drop-and-create 를 한다. analyzer 가 변경되면 기존 스키마를 지워야 하기 때문이다.
+            strategy: drop-and-create #drop-and-create #create-or-update
+          backend:
+            schema_management:
+              minimal_required_status: yellow
+              minimal_required_status_wait_timeout: 100000
+            layout:
+              strategy: io.rchemist.common.config.HibernateSearchIndexNameStrategy
+            username: ${ES_USERNAME}
+            password: ${ES_PASSWORD}
+            index_name_prefix: ${ES_PREFIX}
+            connection_timeout: 3000
+            read_timeout: 12000
+            version: 8.6.1
+            version_check:
+              enabled: false
+            uris: https://${ES_URL}
+            analysis:
+              configurer: class:io.rchemist.common.search.config.ElasticsearchKoreanAnalyzerConfigurer
+
+platform:
+  config:
+    common:
+      site-name: ${SITE_NAME}
+      built-in-user:
+        enabled: false
+      built-in-translation:
+        enabled: false
+      built-in-lock:
+        enabled: false
+      thymeleaf:
+        enabled: false
+      elasticache:
+        enabled: false
+    provider:
+      mongo: false
+      elastic: NONE
+    datasource:
+      data-per-services: false
+    security:
+      aes-key: 76f0ef614f751def723694732266613ccd9fee4783a52e4b150a59c47e15514f
+    payment:
+      trial-days: 45
+      toss:
+        merchant-id: 토스MID
+    admin:
+      validate:
+        regex:
+          loginName: ^[_a-zA-Z0-9-]+(.[_a-zA-Z0-9-]+)*@(?:\w+\.)+\w+$
+        message:
+          loginName: error.message.regex.loginName.email
+    asset:
+      view:
+        domain: http://${FRONT_URL}

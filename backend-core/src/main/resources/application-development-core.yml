@@ -1,0 +1,27 @@
+spring:
+  cassandra:
+    connection:
+      connect-timeout: 10s
+      init-query-timeout: 10s
+    request:
+      timeout: 10s
+    pool:
+      idle-timeout: 10s
+    schema-action: create_if_not_exists
+    keyspace-name: backend
+    local-datacenter: DC1
+    port: 9042
+    contact-points: scylla.dev.rchemist.io
+    username: rcm_client
+    password: Rcm-pwd0!
+
+logging:
+  level:
+    com:
+      datastax:
+        oss:
+          driver:
+            internal:
+              core:
+                pool:
+                  ChannelPool: Error
